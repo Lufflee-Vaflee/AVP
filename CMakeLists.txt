@@ -6,12 +6,41 @@ if (NOT CMAKE_CXX_STANDARD)
 endif ()
 
 if (NOT CMAKE_COMPILER_IS_GNUCXX)
-    message( FATAL_ERROR "COMPILER IS NOT GNU_CXX, EXETING" )
+    message( FATAL_ERROR "COMPILER IS NOT GNU_CXX, EXITING" )
 endif ()
+
+if ()
 
 if (CMAKE_COMPILER_IS_GNUCXX)
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif ()
+
+
+#Config file
+set(L3_SIZE 0 Int)
+set(L2_SIZE 0)
+set(L1_SIZE 0)
+
+execute_process (
+    COMMAND bash -c "getconf LEVEL3_CACHE_SIZE"
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    OUTPUT_VARIABLE L3_SIZE
+)
+
+execute_process (
+    COMMAND bash -c "getconf LEVEL2_CACHE_SIZE"
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    OUTPUT_VARIABLE L2_SIZE
+)
+
+execute_process (
+    COMMAND bash -c "getconf LEVEL1_DCACHE_SIZE"
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    OUTPUT_VARIABLE L1_SIZE
+)
+
+configure_file(config/Config.hpp.in Config.hpp)
+
 
 
 #INTRINSICS_LIB
@@ -55,7 +84,6 @@ target_include_directories(${SIMD} PRIVATE
 target_compile_options(${SIMD} PRIVATE
     -O2
 )
-
 
 
 add_executable(${PROJECT_NAME} main.cpp)

@@ -1,0 +1,5 @@
+
+
+#define L3_SIZE  @L3_SIZE@
+#define L2_SIZE  @L2_SIZE@
+#define L1_SIZE  @L1_SIZE@
