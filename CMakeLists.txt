@@ -9,17 +9,18 @@ if (NOT CMAKE_COMPILER_IS_GNUCXX)
     message( FATAL_ERROR "COMPILER IS NOT GNU_CXX, EXITING" )
 endif ()
 
-if ()
 
 if (CMAKE_COMPILER_IS_GNUCXX)
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif ()
 
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 #Config file
-set(L3_SIZE 0 Int)
+set(L3_SIZE 0)
 set(L2_SIZE 0)
 set(L1_SIZE 0)
+set(MULTIPLIER 0.9)
 
 execute_process (
     COMMAND bash -c "getconf LEVEL3_CACHE_SIZE"
