@@ -86,17 +86,14 @@ target_compile_options(${SIMD} PRIVATE
     -O2
 )
 
-
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME} src/main.cpp)
 
 target_compile_options(${PROJECT_NAME} PRIVATE 
     -O2
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
-    /SIMD
-    /NoSIMD
-    /Intrinsics
+    ${PROJECT_SOURCE_DIR}
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
