@@ -7,13 +7,13 @@
 #include <chrono>
 #include <iostream>
 
-bool check(int a, int b, int c);
-
 
 int main() {
-    auto bench = Benchmark(check);
 
-    auto result = bench(1, 2, 3);
+    SIMD::Matrix<3, 4, int> a;
+    SIMD::Matrix<4, 5, int> b;
+
+    auto c = a * b;
 
     return 0;
 }
