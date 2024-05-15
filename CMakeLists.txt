@@ -6,7 +6,7 @@ if (NOT CMAKE_CXX_STANDARD)
 endif ()
 
 if (NOT CMAKE_COMPILER_IS_GNUCXX)
-    message( FATAL_ERROR "COMPILER IS NOT GNU_CXX, EXITING" )
+    #message( FATAL_ERROR "COMPILER IS NOT GNU_CXX, EXITING" )
 endif ()
 
 
@@ -74,23 +74,19 @@ target_compile_options(${NoSIMD} PRIVATE
 
 
 #SIMD_LIB
-set(SIMD ${PROJECT_NAME}_SIMD)
+#set(SIMD ${PROJECT_NAME}_SIMD)
 
-add_library(${SIMD} STATIC SIMD/lib.cpp)
+#add_library(${SIMD} STATIC SIMD/lib.cpp)
 
-target_include_directories(${SIMD} PRIVATE 
-    SIMD
-)
+#target_include_directories(${SIMD} PRIVATE 
+#    SIMD
+#)
 
-target_compile_options(${SIMD} PRIVATE
-    -O2
-)
+#target_compile_options(${SIMD} PRIVATE
+#    -O2
+#)
 
 add_executable(${PROJECT_NAME} src/main.cpp)
-
-target_compile_options(${PROJECT_NAME} PRIVATE 
-    -O2
-)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     ${PROJECT_SOURCE_DIR}
