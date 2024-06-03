@@ -15,7 +15,7 @@ class NaiveMatrix {
     static_assert(std::is_arithmetic_v<element>);
     public:
 
-    NaiveMatrix() {m_data.reserve(N * M);};
+    NaiveMatrix() { m_data.resize(N * M); };
 
     template<std::size_t P>
     inline NaiveMatrix<N, P, element> operator*(NaiveMatrix<M, P, element> const& other) {

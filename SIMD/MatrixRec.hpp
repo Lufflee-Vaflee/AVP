@@ -66,7 +66,7 @@ class RecMatrix {
     static_assert(std::is_arithmetic_v<element>);
     public:
 
-    RecMatrix() {m_data.reserve(N * M);};
+    RecMatrix() { m_data.resize(N * M); };
 
     template<std::size_t P>
     inline RecMatrix<N, P, element> operator*(RecMatrix<M, P, element> const& other) {
