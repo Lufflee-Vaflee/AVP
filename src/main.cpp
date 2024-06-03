@@ -1,8 +1,6 @@
 #include "SIMD/MatrixRec.hpp"
 #include "SIMD/NaiveMatrix.hpp"
 
-#include "Benchmark.hpp"
-
 #include <chrono>
 #include <iostream>
 
@@ -12,7 +10,6 @@ void test_rec_32();
 void test_naive_32();
 
 int main() {
-
     test_naive_64();
     test_rec_64();
     test_naive_32();
