@@ -1,4 +1,4 @@
-
+#pragma once
 
 namespace {
 
@@ -9,10 +9,3 @@ namespace {
 #define MULTIPLIER @MULTIPLIER@
 
 }
-
-
-static_assert(sizeof(unsigned) == 4);
-
-constexpr unsigned L3_EFFECTIVE = L3_SIZE / 3 * MULTIPLIER;
-constexpr unsigned L2_EFFECTIVE = L2_SIZE / 3 * MULTIPLIER;
-constexpr unsigned L1_EFFECTIVE = L1_SIZE / 3 * MULTIPLIER;

@@ -43,50 +43,12 @@ execute_process (
 configure_file(config/Config.hpp.in Config.hpp)
 
 
-
-#INTRINSICS_LIB
-set(INTRINSICS ${PROJECT_NAME}_INTRINSICS)
-
-add_library(${INTRINSICS} STATIC Intrinsics/lib.cpp)
-
-target_include_directories(${INTRINSICS} PRIVATE 
-    Intrinsics
-)
-
-target_compile_options(${INTRINSICS} PRIVATE
-    -O2
-)
-
-
-#NoSIMD_LIB
-set(NoSIMD ${PROJECT_NAME}_NoSIMD)
-
-add_library(${NoSIMD} STATIC NoSIMD/lib.cpp)
-
-target_include_directories(${NoSIMD} PRIVATE 
-    NoSIMD
-)
-
-target_compile_options(${NoSIMD} PRIVATE
-    -O2
-    -fno-tree-vectorize
-)
-
-
-#SIMD_LIB
-#set(SIMD ${PROJECT_NAME}_SIMD)
-
-#add_library(${SIMD} STATIC SIMD/lib.cpp)
-
-#target_include_directories(${SIMD} PRIVATE 
-#    SIMD
-#)
-
-#target_compile_options(${SIMD} PRIVATE
-#    -O2
-#)
-
 add_executable(${PROJECT_NAME} src/main.cpp)
+
+target_compile_options(${PROJECT_NAME}  PUBLIC
+    -O3
+    #-fno-tree-vectorize
+)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     ${PROJECT_SOURCE_DIR}

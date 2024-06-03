@@ -1,5 +1,3 @@
-#include "NoSIMD/lib.hpp"
-#include "Intrinsics/lib.hpp"
 #include "SIMD/MatrixRec.hpp"
 #include "SIMD/NaiveMatrix.hpp"
 
@@ -8,35 +6,83 @@
 #include <chrono>
 #include <iostream>
 
+void test_rec_64();
+void test_naive_64();
+void test_rec_32();
+void test_naive_32();
 
 int main() {
 
-    //SIMD::RecMatrix<8, 8, int> a;
-    //SIMD::RecMatrix<8, 8, int> b;
-    SIMD::NaiveMatrix<100, 200, unsigned> a;
-    SIMD::NaiveMatrix<200, 100, unsigned> b;
+    test_naive_64();
+    test_rec_64();
+    test_naive_32();
+    test_rec_32();
 
-    SIMD::RecMatrix<100, 200, unsigned> d;
-    SIMD::RecMatrix<200, 100, unsigned> e;
+    return 0;
+}
+
+void test_naive_64() {
+    SIMD::NaiveMatrix<2000, 2000, double> a;
+    SIMD::NaiveMatrix<2000, 2000, double> b;
 
     a.fillWithRand();
     b.fillWithRand();
 
-    d.m_data = a.m_data;
-    e.m_data = b.m_data;
+    using namespace std::chrono;
 
-    std::cout << a << std::endl;
-    std::cout << b << std::endl;
-
+    high_resolution_clock::time_point t1 = high_resolution_clock::now();
     auto c = a * b;
-    auto l = d * e;
+    high_resolution_clock::time_point t2 = high_resolution_clock::now();
+    duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
+    std::cout << "It took me " << time_span.count() << " seconds.(naive64)\n";
+}
 
-    std::cout << c << std::endl;
-    std::cout << l << std::endl;
 
-    bool isEqual = (l.m_data == c.m_data);
+void test_rec_64() {
+    SIMD::RecMatrix<2000, 2000, double> a;
+    SIMD::RecMatrix<2000, 2000, double> b;
 
-    std::cout << '\n' << (isEqual ? "IS EQUAL!!!" : "IS NOT EQUAL (((") << '\n';
+    a.fillWithRand();
+    b.fillWithRand();
 
-    return c.m_data[13];
+    using namespace std::chrono;
+
+    high_resolution_clock::time_point t1 = high_resolution_clock::now();
+    auto c = a * b;
+    high_resolution_clock::time_point t2 = high_resolution_clock::now();
+    duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
+    std::cout << "It took me " << time_span.count() << " seconds.(rec64)\n";
+}
+
+void test_naive_32() {
+    SIMD::NaiveMatrix<2000, 2000, float> a;
+    SIMD::NaiveMatrix<2000, 2000, float> b;
+
+    a.fillWithRand();
+    b.fillWithRand();
+
+    using namespace std::chrono;
+
+    high_resolution_clock::time_point t1 = high_resolution_clock::now();
+    auto c = a * b;
+    high_resolution_clock::time_point t2 = high_resolution_clock::now();
+    duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
+    std::cout << "It took me " << time_span.count() << " seconds.(naive32)\n";
+}
+
+
+void test_rec_32() {
+    SIMD::RecMatrix<2000, 2000, float> a;
+    SIMD::RecMatrix<2000, 2000, float> b;
+
+    a.fillWithRand();
+    b.fillWithRand();
+
+    using namespace std::chrono;
+
+    high_resolution_clock::time_point t1 = high_resolution_clock::now();
+    auto c = a * b;
+    high_resolution_clock::time_point t2 = high_resolution_clock::now();
+    duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
+    std::cout << "It took me " << time_span.count() << " seconds.(rec32)\n";
 }

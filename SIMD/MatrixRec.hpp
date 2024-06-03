@@ -2,6 +2,7 @@
 
 #include <array>
 #include <cstring>
+#include <vector>
 
 #include "Config.hpp"
 #include <iomanip>
@@ -10,22 +11,10 @@
 
 namespace SIMD {
 
-constexpr auto LowerBound = L1_SIZE / (2 * 3 * 2);  // 2 - commands and data, 3 - number of matrixes, 2 - vodoo num for environment needs :)
-
-unsigned* debug;
+constexpr auto LowerBound = L2_SIZE;  // 2 - commands and data, 3 - number of matrixes, 2 - vodoo num for environment needs :)
 
 template<multTraits traits, typename element>
-void plain_mult(element* C, element* A, element* B) {
-    
-    std::cout << "plain mult entrance\n";
-    std::cout << "C: " << (std::size_t)C / sizeof(element) << '\n';
-    std::cout << "A: " << (std::size_t)A / sizeof(element) << '\n';
-    std::cout << "B: " << (std::size_t)B / sizeof(element) << '\n';
-    std::cout << "N: " << traits.N << '\n';
-    std::cout << "M: " << traits.M << '\n';
-    std::cout << "P: " << traits.P << '\n';
-
-
+void plain_mult(element* C, element const * const A, element const * const B) {
     for(std::size_t i = 0; i < traits.N; ++i) {
         for(std::size_t j = 0; j < traits.M; ++j) {
             for(std::size_t k = 0; k < traits.P; ++k) {
@@ -33,19 +22,10 @@ void plain_mult(element* C, element* A, element* B) {
             }
         }
     }
-
-    std::cout << '\n';
-    for(std::size_t i = 0; i < 10; ++i) {
-        for(std::size_t j = 0; j < 10; ++j) {
-            std::cout << std::setw(5) << debug[i * 10 + j];
-        }
-        std::cout << '\n';
-    }
-    std::cout << '\n';
 }
 
 template<multTraits traits, typename element>
-void mult_body(element* C, element* A, element* B) {
+void mult_body(element* C, element const * const A, element const * const B) {
 
     constexpr auto max = std::max(std::max(traits.N, traits.M), traits.P);
 
@@ -86,19 +66,17 @@ class RecMatrix {
     static_assert(std::is_arithmetic_v<element>);
     public:
 
-    RecMatrix() {
-        debug = (unsigned*)&m_data;
-    };
+    RecMatrix() {m_data.reserve(N * M);};
 
     template<std::size_t P>
     inline RecMatrix<N, P, element> operator*(RecMatrix<M, P, element> const& other) {
         RecMatrix<N, P, element> result;
 
-        std::memset(&result.m_data, 0, sizeof(element) * N * P);
+        std::memset(result.m_data.data(), 0, sizeof(element) * N * P);
 
         constexpr auto start_traits = multTraits(N, M, P, M, P);
 
-        mult_body<start_traits, element>((element*)&result.m_data, (element*)&m_data, (element*)&other.m_data);
+        mult_body<start_traits, element>(result.m_data.data(), m_data.data(), other.m_data.data());
 
         return result;
     }
@@ -110,10 +88,21 @@ class RecMatrix {
             }
             stream << '\n';
         }
+
+        return stream;
+    }
+
+    void fillWithRand() {
+        std::srand(time(0));
+        for(std::size_t i = 0; i < N; ++i) {
+            for(std::size_t j = 0; j < M; ++j) {
+                m_data[i * M + j] = std::rand() % 5;
+            }
+        }
     }
 
     public:
-    std::array<element, N * M> m_data;
+    std::vector<element> m_data;
 };
 
 }
