@@ -19,8 +19,8 @@ int main() {
 }
 
 void test_naive_64() {
-    SIMD::NaiveMatrix<2000, 2000, double> a;
-    SIMD::NaiveMatrix<2000, 2000, double> b;
+    SIMD::NaiveMatrix<2000, 1500, double> a;
+    SIMD::NaiveMatrix<1500, 2000, double> b;
 
     a.fillWithRand();
     b.fillWithRand();
@@ -36,8 +36,8 @@ void test_naive_64() {
 
 
 void test_rec_64() {
-    SIMD::RecMatrix<2000, 2000, double> a;
-    SIMD::RecMatrix<2000, 2000, double> b;
+    SIMD::RecMatrix<2000, 1500, double> a;
+    SIMD::RecMatrix<1500, 2000, double> b;
 
     a.fillWithRand();
     b.fillWithRand();
@@ -52,8 +52,8 @@ void test_rec_64() {
 }
 
 void test_naive_32() {
-    SIMD::NaiveMatrix<2000, 2000, float> a;
-    SIMD::NaiveMatrix<2000, 2000, float> b;
+    SIMD::NaiveMatrix<2000, 1500, float> a;
+    SIMD::NaiveMatrix<1500, 2000, float> b;
 
     a.fillWithRand();
     b.fillWithRand();
@@ -69,8 +69,8 @@ void test_naive_32() {
 
 
 void test_rec_32() {
-    SIMD::RecMatrix<2000, 2000, float> a;
-    SIMD::RecMatrix<2000, 2000, float> b;
+    SIMD::RecMatrix<2000, 1500, float> a;
+    SIMD::RecMatrix<1500, 2000, float> b;
 
     a.fillWithRand();
     b.fillWithRand();
